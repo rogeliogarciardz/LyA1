@@ -142,14 +142,13 @@ public class ALexico {
                 System.out.println("Clase: 6  Tipo 6");
                 break;
             case 109: // !=
-                System.out.println("Componente: [" + componente.strip().substring(0, componente.length() - 1) + "]");
+                System.out.println("Componente: [" + componente.strip() + "]");
                 System.out.println("Clase: 6  Tipo 5");
-                pendiente = true;
                 break;
             case 110: // :=
-                System.out.println("Componente: [" + componente.strip().substring(0, componente.length() - 1) + "]");
+                System.out.println("Componente: [" + componente.strip() + "]");
                 System.out.println("Clase: 7  Tipo 1");
-                pendiente = true;
+                //pendiente = true;
                 break;
             case 111: //ID
                 System.out.println("Componente: [" + componente.strip().substring(0, componente.length() - 1) + "]");
