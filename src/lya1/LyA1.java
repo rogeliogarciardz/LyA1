@@ -16,6 +16,10 @@
  */
 package lya1;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Rogelio
@@ -26,14 +30,25 @@ public class LyA1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Analizador analizador = new Analizador();
         
-       if( analizador.analizar("10001") ){
-           System.out.println("ACEPTADA"); 
-        }else {
-           System.out.println("RECHAZADA");
-       }
+            // TODO code application logic here
+            /*
+            Analizador analizador = new Analizador();
+            
+            if( analizador.analizar("10001") ){
+            System.out.println("ACEPTADA");
+            }else {
+            System.out.println("RECHAZADA");
+            }
+            */
+        try {    
+            ALexico lexico = new ALexico();
+            lexico.analizar("codigo.txt");
+            
+        } catch (IOException ex) {
+            System.out.println("Error al leer el archivo");
+            Logger.getLogger(LyA1.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -35,12 +35,37 @@ public class Automata {
     private int q0;
     //TODO cambiar cadena de estados finales por arreglo o lista
     private ArrayList<Integer> F;
-    private int mte[][];
 
+    //                       L   D   B   +   -   *   /   <   >   =   !   :   ;   E  \"   O  EOF";
+    private int mte[][] = {{  8,  9,  0,101,102,103,  1,  4,  5,108,  6,  7,113,  0, 10,202, 199},
+                           {100,100,100,100,100,  2,100,100,100,100,100,100,100,100,100,100,100},
+                           {  2,  2,  2,  2,  2,  3,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
+                           {  2,  2,  2,  2,  2,  2,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
+                           {105,105,105,105,105,105,105,105,105,104,105,105,105,105,105,105,105},
+                           {107,107,107,107,107,107,107,107,107,106,107,107,107,107,107,107,107},
+                           {200,200,200,200,200,200,200,200,200,109,200,200,200,200,200,200,200},
+                           {201,201,201,201,201,201,201,201,201,110,201,201,201,201,201,201,201},
+                           {  8,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111},
+                           {112,  9,112,112,112,112,112,112,112,112,112,112,112,112,112,112,112},
+                           { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,203,114, 10,203}};
+    
     /**
      * Constructor por default que carga un ejemplo basico de un AFD
      */
     public Automata() {
+        Q=11;
+        alpha="LDB+-*/<>=!:;ECOF";
+        q0=0;
+        F = new ArrayList<>();
+        F.add(100); F.add(104); F.add(108);
+        F.add(101); F.add(105); F.add(109);
+        F.add(102); F.add(106); F.add(110);
+        F.add(103); F.add(107); F.add(111);
+        F.add(112); F.add(113); F.add(114);
+        F.add(200); F.add(201); F.add(202);
+        F.add(203); 
+        
+        /*
         Q=4;
         alpha="01";
         q0=0;
@@ -56,8 +81,9 @@ public class Automata {
         mte[3][0] = 1;
         mte[3][1] = 2;
         System.out.println("Automata por default creado.");
+        */
     }
-
+    
     /**
      * Número de estados del AFD
      * @return devuelve el numero de estados del AFD
