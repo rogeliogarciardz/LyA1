@@ -57,15 +57,16 @@ public class ALexico {
         PalabrasReservadas.add("repite");
         PalabrasReservadas.add("finr");
 
+        Variables = new ArrayList();
+        ConstantesTexto = new ArrayList();
+        ConstantesNumeros = new ArrayList();
         afd = new Automata();
 
     }
 
     public void analizar(String archivo) throws FileNotFoundException, IOException {
         fr = new FileReader(archivo);
-
         siguiente_simbolo();
-
         pendiente = true;
 
         while (!eof) {
@@ -78,7 +79,6 @@ public class ALexico {
         if (!pendiente) {
             siguiente_simbolo();
         }
-
         pendiente = false;
         componente = "";
         q = 0;
@@ -87,11 +87,9 @@ public class ALexico {
             if (q == 0) {
                 componente = "";
             }
-
             q = estados(q, simbolo_analizado);
             componente += (char) simbolo_analizado;
             //System.out.println(" -> " + q);
-            
             if (q < 100) {
                 siguiente_simbolo();
             }
@@ -126,7 +124,7 @@ public class ALexico {
             case 105: // <
                 System.out.println("Componente: [" + componente.strip().substring(0, componente.length() - 1) + "]");
                 System.out.println("Clase: 6  Tipo 1");
-                pendiente = false;
+                pendiente = true;
                 break;
             case 106: // >=
                 System.out.println("Componente: [" + componente.strip() + "]");
@@ -151,8 +149,20 @@ public class ALexico {
                 //pendiente = true;
                 break;
             case 111: //ID
-                System.out.println("Componente: [" + componente.strip().substring(0, componente.length() - 1) + "]");
-                System.out.println("Clase: 1,2  Tipo ?");
+                componente = componente.strip().substring(0, componente.length() - 1);
+                
+                System.out.println("Componente: [" + componente + "]");
+                if (PalabrasReservadas.contains(componente)) {
+                    int ipr = PalabrasReservadas.indexOf(componente);
+                    System.out.println("Clase: 1  Tipo " + ipr);
+                } else {
+
+                    if (!Variables.contains(componente)) {
+                        Variables.add(componente);
+                    }
+                    int idv = Variables.indexOf(componente);
+                    System.out.println("Clase: 2  Tipo " + idv);
+                }
                 pendiente = true;
                 break;
             case 112: //DIG
@@ -189,22 +199,22 @@ public class ALexico {
             is = 1;
         } else if (s == 13) {
             is = 13;
-        } else if (s == 34) {
+        } else if (s == 34) {//"
             is = 14;
         } else if (s == 9 || s == 10 || s == 32) {
             is = 2;
         } else if (afd.getAlpha().contains("" + (char) s)) {
             is = afd.getAlpha().indexOf("" + (char) s);
-        } else if (s == -1) {
+        } else if (s == -1) { //EOF
             eof = true;
             is = 16;
         }
-
         //System.out.print("q: " + q + ", S:" + is);
         return afd.getMte(q, is);
     }
 
     private void error(int i) {
+        System.out.println("Componente: [" + componente.strip() + "]");
         switch (i) {
             case 200:
                 System.out.println("Error es necesario simbolo =");
@@ -224,6 +234,5 @@ public class ALexico {
     private void siguiente_simbolo() throws IOException {
         simbolo_analizado = fr.read();
         //System.out.println("SA: [" + (char) simbolo_analizado + "](" + simbolo_analizado + ")" + pendiente);
-
     }
 }
